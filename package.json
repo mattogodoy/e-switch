@@ -1,0 +1,22 @@
+{
+  "name": "e-switch",
+  "version": "1.0.0",
+  "description": "eSwitch server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattogodoy/e-switch.git"
+  },
+  "author": "Matto Godoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattogodoy/e-switch/issues"
+  },
+  "homepage": "https://github.com/mattogodoy/e-switch#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
