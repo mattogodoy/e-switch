@@ -1,0 +1,14 @@
+.switch {
+  display: block;
+  height: 50px;
+  width: 50px;
+  border: 2px solid black;
+}
+
+.off {
+  background-color: grey;
+}
+
+.on {
+  background-color: #FFFA0F;
+}
