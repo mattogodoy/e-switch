@@ -2,20 +2,37 @@
   .container
     form.col.s12
       .row
-        .input-field.col.s12
-          input#name.validate(type='text')
+        .input-field.col.s4.offset-s2
+          input#name.validate(type='text' name='name')
           label(for='name') Full name
+
+        .input-field.col.s4
+          input#email.validate(type='email' name='email')
+          label(for='email', data-error='Please use a valid email address', data-success='right') Email
+
       .row
-        .input-field.col.s12
-          input#email.validate(type='email')
-          label(for='email', data-error='wrong', data-success='right') email
-      .row
-        .input-field.col.s12
-          input#password.validate(type='password')
+        .input-field.col.s4.offset-s2
+          input#password.validate(type='password' name='password')
           label(for='password') Password
-      .row
-        .input-field.col.s12
+
+        .input-field.col.s4
           input#repeat.validate(type='password')
           label(for='repeat') Repeat password
+
+      .row.alert.no-margin-bottom
+        .col.s8.offset-s2
+          .card-panel.red.darken-1
+            span.white-text -
+
       .row
-        a.waves-effect.waves-light.btn-large(href="#") Register
+        .col.s8.offset-s2.center
+          a.waves-effect.waves-light.btn-large.btn-register(href="#") Register
+
+          .preloader-wrapper.small.active
+            .spinner-layer.spinner-blue-only
+              .circle-clipper.left
+                .circle
+              .gap-patch
+                .circle
+              .circle-clipper.right
+                .circle

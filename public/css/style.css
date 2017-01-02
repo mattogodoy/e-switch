@@ -22,3 +22,11 @@
 #login .preloader-wrapper {
   display: none;
 }
+
+#register .alert {
+  display: none;
+}
+
+#register .preloader-wrapper {
+  display: none;
+}

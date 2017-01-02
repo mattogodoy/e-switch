@@ -13,7 +13,6 @@ var userRef = db.ref('/users');
 
 var User = function (data) {
   /* === STRUCTURE ===
-  id: Unique ID
   name: User's full name
   email: Email address
   password: MD5 encrypted password
@@ -92,7 +91,6 @@ User.prototype.login = function (callback) {
       var user = util.firstChild(snapshot.val());
 
       if(user.email == self.data.email && user.password == self.data.password){
-        self.data.id = user.id;
         self.data.name = user.name;
         self.data.email = user.email;
         self.data.password = user.password;
@@ -105,6 +103,26 @@ User.prototype.login = function (callback) {
     }, function(error) {
       callback(error, null);
     });
+}
+
+User.prototype.exists = function (callback) {  
+  callback(null, false);
+}
+
+User.prototype.save = function (callback) {
+  var self = this;
+
+  if(this.data.email && this.data.password){
+    userRef.push(this.data, function(err){
+      if(err){
+        callback(err, null);
+      } else {
+        callback(null, this.key);
+      }
+    });
+  } else {
+    callback('Email and / or password not set.', null);
+  }
 }
 
 module.exports = User;

@@ -4,12 +4,6 @@ var bodyParser = require('body-parser');
 var urlencode = bodyParser.urlencoded({ extended: false });
 var User = require('../models/user');
 
-// router.route('*')
-//   .get(function(req, res, next){
-//     req.session.lastPage = req.url;
-//     next();
-//   });
-
 router.route('/')
   .get(function(req, res){
     res.render('index', { test: req.session.test || 'null' });
@@ -49,6 +43,31 @@ router.route('/logout')
 router.route('/register')
   .get(function(req, res){
     res.render('register');
+  })
+  .post(urlencode, function(req, res){
+    var user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    });
+
+    // TODO: check if user exists
+    user.exists(function(err, response){
+      if (err) res.json({ error: err });
+
+      if(response == false){
+        user.save(function(err, response){
+          if (err){
+            res.json({ error: err });
+          } else {
+            req.session.user = user;
+            res.json({result: 'ok'});
+          }
+        });
+      } else {
+        res.json({ error: 'The email you are trying to use is already registered' });
+      }
+    });
   });
 
 router.route('/dashboard')
