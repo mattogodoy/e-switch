@@ -1,0 +1,21 @@
+#register.section.no-pad-bot
+  .container
+    form.col.s12
+      .row
+        .input-field.col.s12
+          input#name.validate(type='text')
+          label(for='name') Full name
+      .row
+        .input-field.col.s12
+          input#email.validate(type='email')
+          label(for='email', data-error='wrong', data-success='right') email
+      .row
+        .input-field.col.s12
+          input#password.validate(type='password')
+          label(for='password') Password
+      .row
+        .input-field.col.s12
+          input#repeat.validate(type='password')
+          label(for='repeat') Repeat password
+      .row
+        a.waves-effect.waves-light.btn-large(href="#") Register

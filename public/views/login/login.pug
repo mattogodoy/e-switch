@@ -1,0 +1,16 @@
+#login.section.no-pad-bot
+  .container
+    form.col.s12
+      .row
+        .input-field.col.s12
+          input#email.validate(type='email')
+          label(for='email', data-error='wrong', data-success='right') email
+      .row
+        .input-field.col.s12
+          input#password.validate(type='password')
+          label(for='password') Password
+      p
+        input#remember(type='checkbox')
+        label(for='remember') Remember me
+      .row
+        a.waves-effect.waves-light.btn-large(href="#") Login

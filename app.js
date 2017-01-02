@@ -4,10 +4,25 @@ var port = 8000;
 var mqttLib = require('mqtt');
 var mqtt  = mqttLib.connect('mqtt://test.mosquitto.org');
 
+app.set('views', __dirname + '/public/views');
+app.set('view engine', 'pug');
+
 app.use(express.static('public'));
 
-app.get('/test', function(req, res){
-  res.json('hola!');
+app.get('/', function(req, res){
+  res.render('index', { title: 'Hey', message: 'Hello there!' });
+});
+
+app.get('/login', function(req, res){
+  res.render('login');
+});
+
+app.get('/register', function(req, res){
+  res.render('register');
+});
+
+app.get('/dashboard', function(req, res){
+  res.render('dashboard');
 });
 
 mqtt.on('connect', function () {
