@@ -1,16 +1,39 @@
 #login.section.no-pad-bot
   .container
-    form.col.s12
-      .row
-        .input-field.col.s12
-          input#email.validate(type='email')
-          label(for='email', data-error='wrong', data-success='right') email
-      .row
-        .input-field.col.s12
-          input#password.validate(type='password')
+    form
+      .row.no-margin-bottom
+        .input-field.col.s4.offset-s2
+          input#email.validate(type='email' name='email')
+          label(for='email', data-error='Please enter a valid email address', data-success='right') Email
+        
+        .input-field.col.s4
+          input#password.validate(type='password' name='password')
           label(for='password') Password
-      p
-        input#remember(type='checkbox')
-        label(for='remember') Remember me
+      
+      .row.alert.no-margin-bottom
+        .col.s8.offset-s2
+          .card-panel.red.darken-1
+            span.white-text -
+              
       .row
-        a.waves-effect.waves-light.btn-large(href="#") Login
+        .col.s8.offset-s2.center
+          p.no-margin-top
+            input#remember(type='checkbox' name='remember')
+            label(for='remember') Remember me
+
+          a.waves-effect.waves-light.btn-large.btn-login(href="#") Login
+
+          .preloader-wrapper.small.active
+            .spinner-layer.spinner-blue-only
+              .circle-clipper.left
+                .circle
+              .gap-patch
+                .circle
+              .circle-clipper.right
+                .circle          
+      
+      .row
+        .col.s4.offset-s4
+          p.center
+            span Don't have a user yet?&nbsp;
+            a(href="/register") Register
