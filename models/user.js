@@ -1,3 +1,16 @@
+var util = require('../includes/util');
+var db = require('../includes/db');
+var userRef = db.ref('/users');
+
+// var firebase = require('firebase');
+// firebase.initializeApp({
+//     apiKey: "AIzaSyDQRMT9N_JwyunPiCWUIYxPIl4_TgHVRRU",
+//     authDomain: "smartthings-2f0b3.firebaseapp.com",
+//     databaseURL: "https://smartthings-2f0b3.firebaseio.com",
+//     storageBucket: "smartthings-2f0b3.appspot.com",
+//     messagingSenderId: "236639005563"
+//   });
+
 var User = function (data) {
   /* === STRUCTURE ===
   id: Unique ID
@@ -42,16 +55,56 @@ User.prototype.getLastAccess = function () {
 }
 
 // === METHODS ===
-
-// User.findById = function (id, callback) {  
-//   db.get('users', {id: id}).run(function (err, data) {
-//     if (err) return callback(err);
-//     callback(null, new User(data));
-//   });
-// }
-
 User.prototype.passwordIsValid = function () {  
   return true;
+}
+
+User.prototype.getAll = function () {
+  userRef.once('value', function(snapshot) {
+    console.log(snapshot.val());
+  }, function(error) {
+    console.error(error);
+  });
+}
+
+User.prototype.findByEmail = function (email, callback) {  
+  userRef
+    .orderByChild('email')
+    .startAt(email)
+    .endAt(email)
+    .once('value', function(snapshot) {
+      var user = util.firstChild(snapshot.val());
+      
+      callback(null, user);
+    }, function(error) {
+      callback(error, null);
+    });
+}
+
+User.prototype.login = function (callback) {
+  var self = this;
+
+  userRef
+    .orderByChild('email')
+    .startAt(self.data.email)
+    .endAt(self.data.email)
+    .once('value', function(snapshot) {
+      var user = util.firstChild(snapshot.val());
+
+      if(user.email == self.data.email && user.password == self.data.password){
+        self.data.id = user.id;
+        self.data.name = user.name;
+        self.data.email = user.email;
+        self.data.password = user.password;
+
+        callback(null, user);
+      } else {
+        callback('Wrong username / password', null);
+      }
+
+    }, function(error) {
+      callback(error, null);
+    });
 }
 
 module.exports = User;

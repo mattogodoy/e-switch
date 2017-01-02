@@ -17,21 +17,26 @@ router.route('/')
 
 router.route('/login')
   .get(function(req, res){
-    res.render('login');
+    if(req.session.user){ 
+      res.redirect('/dashboard');
+    } else {
+      res.render('login');
+    }
   })
   .post(urlencode, function(req, res){
-    if(req.body.email == 'a@a.com' && req.body.password == 'admin'){
-      req.session.user = new User({
-        id: 1,
-        name: 'John Doe',
-        email: req.body.email,
-        password: req.body.password
-      });
+    var user = new User({
+      email: req.body.email,
+      password: req.body.password
+    });
 
-      res.json({result: 'ok'});
-    } else {
-      res.json({error: 'Invalid email / password combination'});
-    }
+    user.login(function(err, data){
+      if (err){
+        res.json({ error: err });
+      } else {
+        req.session.user = user;
+        res.json({result: 'ok'});
+      }
+    });
   });
 
 router.route('/logout')
@@ -48,9 +53,7 @@ router.route('/register')
 
 router.route('/dashboard')
   .get(function(req, res){
-    req.session.test = 'yes';
     if(req.session.user){ 
-      console.log(req.session.user.data);
       res.render('dashboard');
     } else {
       res.redirect('/login');

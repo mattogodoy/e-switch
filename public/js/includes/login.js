@@ -37,12 +37,11 @@
       })
       .done(function(response){
         if(response.result == 'ok'){
-          console.log("yesss!!");
+          window.location = '/dashboard';
         } else if (response.error) {
           $alertText.html(response.error);
           $alertBox.show();
         } else {
-          console.log('Error:', response);
           $alertText.html('Unknown error. Please try again later.');
           $alertBox.show();
         }
